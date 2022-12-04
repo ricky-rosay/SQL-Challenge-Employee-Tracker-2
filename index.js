@@ -96,3 +96,25 @@ function viewAllEmployees() {
         })
         .then(() => runPrompts());
 }
+
+// View all roles
+function viewAllRoles() {
+    db.allRoles()
+        .then(([rows]) => {
+            let roles = rows;
+            console.log("\n");
+            console.table(roles);
+        })
+        .then(() => runPrompts());
+}
+
+// View all deparments
+function viewAllDepartments() {
+    db.allDepartments()
+        .then(([rows]) => {
+            let departments = rows;
+            console.log("\n");
+            console.table(departments);
+        })
+        .then(() => runPrompts());
+}
