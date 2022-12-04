@@ -118,3 +118,123 @@ function viewAllDepartments() {
         })
         .then(() => runPrompts());
 }
+
+// Add a role
+function createRole() {
+    db.allDepartments()
+        .then(([rows]) => {
+            let departments = rows;
+            const departmentChoices = departments.map(({ id, name }) => ({
+                name: name,
+                value: id
+            }));
+
+            prompt([
+                {
+                    name: "title",
+                    message: "What is the name of the role?"
+                },
+                {
+                    name: "salary",
+                    message: "What is the salary rate?"
+                },
+                {
+                    type: "list",
+                    name: "department_id",
+                    message: "Which department does the role fall in under?",
+                    choices: departmentChoices
+                }
+            ])
+                .then(role => {
+                    db.addRole(role)
+                        .then(() => console.log(`Added ${role.title} to the database`))
+                        .then(() => runPrompts())
+                })
+        })
+}
+
+
+// Add a department
+function createDepartment() {
+    prompt([
+        {
+            name: "name",
+            message: "What is the name of the department?"
+        }
+    ])
+        .then(res => {
+            let name = res;
+            db.addDepartment(name)
+                .then(() => console.log(`Added ${name.name} to the database`))
+                .then(() => runPrompts())
+        })
+}
+
+// Add an employee
+function createEmployee() {
+    prompt([
+        {
+            name: "first_name",
+            message: "What's the employee's first name?"
+        },
+        {
+            name: "last_name",
+            message: "What's the employee's last name?"
+        }
+    ])
+        .then(res => {
+            let firstName = res.first_name;
+            let lastName = res.last_name;
+
+            db.allRoles()
+                .then(([rows]) => {
+                    let roles = rows;
+                    const roleChoices = roles.map(({ id, title }) => ({
+                        name: title,
+                        value: id
+                    }));
+
+                    prompt({
+                        type: "list",
+                        name: "roleId",
+                        message: "What's the employee's role?",
+                        choices: roleChoices
+                    })
+                        .then(res => {
+                            let roleId = res.roleId;
+
+                            db.allEmployees()
+                                .then(([rows]) => {
+                                    let employees = rows;
+                                    const managerChoices = employees.map(({ id, first_name, last_name }) => ({
+                                        name: `${first_name} ${last_name}`,
+                                        value: id
+                                    }));
+
+                                    managerChoices.unshift({ name: "None", value: null });
+
+                                    prompt({
+                                        type: "list",
+                                        name: "managerId",
+                                        message: "Who's the employee's manager?",
+                                        choices: managerChoices
+                                    })
+                                        .then(res => {
+                                            let employee = {
+                                                manager_id: res.managerId,
+                                                role_id: roleId,
+                                                first_name: firstName,
+                                                last_name: lastName
+                                            }
+
+                                            db.addEmployee(employee);
+                                        })
+                                        .then(() => console.log(
+                                            `Added ${firstName} ${lastName} to the database`
+                                        ))
+                                        .then(() => runPrompts())
+                                })
+                        })
+                })
+        })
+}
