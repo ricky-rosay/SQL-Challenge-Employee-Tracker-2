@@ -6,14 +6,14 @@ VALUES
     ('Executive'),
     ('Human Resources'),
     ('Marketing'),
-    ('Sales')
+    ('Sales'),
     ('Information Technology'),
     ('Accounting');
 
 INSERT INTO role
     (title, salary, department_id)
 VALUES
-    ('CEO', 300000, 1)
+    ('CEO', 300000, 1),
     ('HR Manager', 125000, 2),
     ('HR', 60000, 2),
     ('Marketing Director', 140000, 3),
