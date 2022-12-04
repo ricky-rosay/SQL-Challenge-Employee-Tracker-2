@@ -85,3 +85,14 @@ function runPrompts() {
     }
     )
 }
+
+// View all employees
+function viewAllEmployees() {
+    db.allEmployees()
+        .then(([rows]) => {
+            let employees = rows;
+            console.log("\n");
+            console.table(employees);
+        })
+        .then(() => runPrompts());
+}
