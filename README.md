@@ -12,6 +12,12 @@ https://drive.google.com/drive/folders/1izHTrbZb1Hl2xCamD63iM3aEE8hIL1hO?usp=sha
 
 ## App Screen shots
 
+<img width="704" alt="Screen Shot 2022-12-04 at 11 35 10 AM" src="https://user-images.githubusercontent.com/111669764/205503543-6286e491-2ceb-412c-b648-76c58779f9b6.png">
+
+<img width="521" alt="Screen Shot 2022-12-04 at 11 35 25 AM" src="https://user-images.githubusercontent.com/111669764/205503551-120e4c34-28c2-425f-a3af-2e5785c3fba2.png">
+
+<img width="1035" alt="Screen Shot 2022-12-04 at 11 35 38 AM" src="https://user-images.githubusercontent.com/111669764/205503559-4ab8a45d-2ef1-45ac-bb7e-2205d692b719.png">
+
 ## License
 
 MIT License
