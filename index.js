@@ -238,3 +238,51 @@ function createEmployee() {
                 })
         })
 }
+
+// Update an employee's role
+function updateEmployeeRole() {
+    db.allEmployees()
+        .then(([rows]) => {
+            let employees = rows;
+            const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+                name: `${first_name} ${last_name}`,
+                value: id
+            }));
+
+            prompt([
+                {
+                    type: "list",
+                    name: "employeeId",
+                    message: "Which employee's role do you want to update?",
+                    choices: employeeChoices
+                }
+            ])
+                .then(res => {
+                    let employeeId = res.employeeId;
+                    db.allRoles()
+                        .then(([rows]) => {
+                            let roles = rows;
+                            const roleChoices = roles.map(({ id, title }) => ({
+                                name: title,
+                                value: id
+                            }));
+
+                            prompt([
+                                {
+                                    type: "list",
+                                    name: "roleId",
+                                    message: "What's the new role of this employee?",
+                                    choices: roleChoices
+                                }
+                            ])
+                                .then(res => db.updateEmployeeRole(employeeId, res.roleId))
+                                .then(() => console.log("Employee's role is updated"))
+                                .then(() => runPrompts())
+                        });
+                });
+        })
+}
+// Quit the application
+function quit() {
+    process.exit();
+}
